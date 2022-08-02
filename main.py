@@ -28,9 +28,9 @@ class Student:
         if not isinstance(student, Student):
             return 'Error[not student]'
         if averege(student) > averege(self):
-            return f'{student} делает домашнюю работу лучше чем {self}'
+            return f'{student.name} {student.surname} делает домашнюю работу лучше чем {self.name} {self.surname}'
         else:
-            return f'{self} делает домашнюю работу лучше чем {student}'
+            return f'{self.name} {self.surname} делает домашнюю работу лучше чем {self.name} {self.surname}'
 
 
 
@@ -52,9 +52,9 @@ class Lecturer(Mentor):
         if not isinstance(lecturer, Lecturer):
             return 'Error[not lecturer]'
         if averege(lecturer) > averege(self):
-            return f'{lecturer} ведет занятия лучше чем {self}'
+            return f'{lecturer.name} {lecturer.surname} ведет занятия лучше чем {self.name} {self.surname}'
         else:
-            return f'{self} ведет занятия лучше чем {lecturer}'
+            return f'{self.name} {self.surname} ведет занятия лучше чем {lecturer.name} {lecturer.surname}'
 
     def __str__(self):
         print('Имя: ', self.name)
@@ -90,20 +90,30 @@ def averege_score_homework(student_list, course):
     score = 0
     for student in student_list:
         for courses, grade in student.grades.items():
-            if course in courses:
+            if course == courses:
                 score += sum(grade) / (len(grade) * len(student_list))
                 # find_course = True
-    return (f'средняя оценка за домашнее задание на курсе {course} - {round(score / len(student.grades))}')
+    return (f'Cредняя оценка за домашнее задание на курсе {course} - {round(score / len(student.grades))}')
 
 def averege_score_courses(lecturer_list, course):
     # find_course = False
     score = 0
     for lecturer in lecturer_list:
         for courses, grade in lecturer.grades.items():
-            if course in courses:
+            if course == courses:
                 score += sum(grade) / (len(grade) * len(lecturer_list))
                 # find_course = True
-    return (f'средняя оценка за домашнее задание на курсе {course} - {round(score / len(lecturer.grades))}')
+    return (f'Cредняя оценка за лекцию на курсе {course} - {round(score / len(lecturer.grades))}')
+
+# # def get_avg_student_grade(student_list, course):
+# #     total_sum = 0
+# #     for student in student_list:
+# #         for c, grades_list in student.grades.items():
+# #             if c == course:
+# #                 total_sum += sum(grades_list) / len(grades_list)
+# #     return round(total_sum / len(student_list), 2)
+#
+# print(get_avg_student_grade(student_lsit, 'Python'))
 
 
 first_student = Student('Ruoy', 'Eman')
@@ -189,3 +199,9 @@ second_reviewer.rate_hw(second_student, 'Portal construction', 10)
 print(first_student.__str__())
 print(second_student.__str__())
 
+print(averege_score_homework([first_student, second_student], 'Portal construction'))
+print(averege_score_homework([first_student, second_student], 'Python'))
+print(averege_score_courses([first_lecturer, second_lecturer], 'Portal construction'))
+print(averege_score_courses([first_lecturer, second_lecturer], 'Python'))
+print(first_student.best_students(second_student))
+print(first_lecturer.best_lecturer(second_lecturer))
